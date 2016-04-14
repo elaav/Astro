@@ -1,2 +1,5 @@
 fits
 sand_box.py
+data
+tmp
+*.pyc
