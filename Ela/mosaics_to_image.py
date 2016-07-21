@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 """
 Created on Wed Mar 09 16:38:43 2016
 
@@ -8,28 +7,35 @@ Created on Wed Mar 09 16:38:43 2016
 import pyfits
 import matplotlib.pyplot as plt
 import argparse
+import os
 
 def parse_args():
-    parser = argparse.ArgumentParser(description='Downloading mosaics throgh IRSA web interface.')
-    parser.add_argument('-o', '--output', help='The output path', required=True)
-    parser.add_argument('-i', '--input', help='The input path', required=True)
+    parser = argparse.ArgumentParser(description='Converting mosaics to images.')
+    parser.add_argument('-o', '--output', help='The output file/dir path', required=True)
+    parser.add_argument('-i', '--input', help='The input dir path', required=True)
     return parser.parse_args()
 
-# Parsing the fits file
-def parse_fits_file(fits_file, output_path):
+# Parsing the fits file and saves it to output_dir
+def parse_fits_file(fits_file, output_dir):
     j_img = pyfits.getdata(fits_file)
     plt.imshow(j_img, aspect='equal')
     plt.title('image')
-    plt.show()
-    #py.savefig('my_rgb_image.png')
+    #plt.show()
+    image_path = os.path.join(output_dir, os.path.splitext(os.path.basename(fits_file))[0] + '.png')
+    plt.savefig(image_path)
 
 
 def main():
     args = parse_args()
     input = args.input
     output = args.output
-    parse_fits_file(input, output)
-    #TODO save to output path
+    if os.path.isdir(input):
+        mosaics = [os.path.join(input, p) for p in os.listdir(input)]
+    else:
+        mosaics = [input]
+    for m in mosaics:
+        parse_fits_file(m, output)
+
 
 if __name__ == "__main__":
     main()
