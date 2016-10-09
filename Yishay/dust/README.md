@@ -17,8 +17,9 @@ SFD_dust_4096_sgp.fits
 
 #### How to use:
 - The class initializer takes 2 arguments for the NGP and SGP files.
-- The `lookup()` method accepts 2 1D numpy arrays of galactic *l* and *b* parameters.
+- The `lookup_*()` methods accept 2 1D numpy arrays of galactic *l* and *b* parameters.
 - The returned array contains the extinction levels.
+- `lookup_linear` closely matches the SDSS extinction values in CasJobs (up to a factor).
 
 #### Example:
 Assume we have `ra` and `dec` arrays, and that the filename variables have been set correctly.  
@@ -32,6 +33,6 @@ sfd = SFDLookUp(ngp_filename, sgp_filename)
 
 coordinates_icrs = SkyCoord(ra=ra, dec=dec)
 coordinates_galactic = coordinates_icrs.galactic
-extinction_values = sfd.lookup(coordinates_galactic.l.to(u.rad).value,
-                               coordinates_galactic.b.to(u.rad).value)
+extinction_values = sfd.lookup_linear(coordinates_galactic.l.to(u.rad).value,
+                                      coordinates_galactic.b.to(u.rad).value)
 ```
