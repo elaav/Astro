@@ -39,4 +39,5 @@ def main():
 
 if __name__ == "__main__":
     main()
+    #parse_fits_file("fits/fits/J003559.00+140715.0-g.fits" ,"fits")
 
