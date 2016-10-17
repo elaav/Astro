@@ -35,8 +35,8 @@ def file_name_to_decimal_coor(file_name):
         return coordsSexaToDeg(splitted[0] + '-' + splitted[1])
 
 # Retrieving SDSS objid for given mosaic name
-def file_name_to_objid(file_name):
-    res = query_sdss(file_name_to_skycoor(file_name))
+def file_name_to_objid(file_name, radius=None):
+    res = query_sdss(file_name_to_skycoor(file_name), radius)
     if res:
         num = len(set(res.columns["objid"]))
         if num > 1:
@@ -83,6 +83,7 @@ def arrange_fits_by_size(fits_data):
         if not data_by_size.has_key(size):
             data_by_size[size] = []
         data_by_size[size].append(f)
+    return data_by_size
 
 # gets the out of range properties according to the outliers.
 # @param objects: list of dicts of regular objects (NO outliers)
@@ -113,12 +114,10 @@ def plot_all_fits(fits_dir, output_dir):
     fits = [os.path.join(fits_dir, p) for p in os.listdir(fits_dir) if p.endswith('.fits')]
     fits_data = [pyfits.getdata(fit) for fit in fits]
 
-    data_by_size = {}
-    for f in fits_data:
-        size = f.size
-        if not data_by_size.has_key(size):
-            data_by_size[size] = []
-        data_by_size[size].append(f)
+    plot_fits_by_size(fits_data)
+
+def plot_fits_by_size(fits_data, out_dir='fits', name=''):
+    data_by_size = arrange_fits_by_size(fits_data)
 
     i = 1
     for key, val in data_by_size.iteritems():
@@ -134,14 +133,25 @@ def plot_all_fits(fits_dir, output_dir):
             fig.add_subplot(m, n, p)
             plt.imshow(j_img)
             plt.axis('off')
+            # plt.ylabel(str(p))
             plt.annotate(str(p), xy=(1, 0), xycoords='axes fraction', fontsize=8,
                          xytext=(0, 0), textcoords='offset points',
                          ha='left', va='bottom')
+            # plt.text(1, -0.15, str(p), ha='left', fontsize=8)
             p += 1
 
         fig.subplots_adjust(wspace=1, hspace=0.01)
-        pic_path = 'fits/' + str(key) + '.png'
+        # plt.show()
+        pic_path = os.path.join(out_dir, str(key) + name + '.png')
         if os.path.isfile(pic_path):
             os.remove(pic_path)
-        plt.savefig('fits/' + str(key) + '.png')
+        plt.savefig(pic_path)
         i += 1
+
+def plot_fits_reg_vs_out(fits_dir, regular, outliers, objids2name):
+    reg_fits = [os.path.join(fits_dir, objids2name[p]) for p in regular]
+    outl_fits = [os.path.join(fits_dir, objids2name[p]) for p in outliers]
+    reg_fits_data = [pyfits.getdata(fit) for fit in reg_fits]
+    outl_fits_data = [pyfits.getdata(fit) for fit in outl_fits]
+    plot_fits_by_size(reg_fits_data, name='-reg')
+    plot_fits_by_size(outl_fits_data, name='-outl')
