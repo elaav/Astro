@@ -99,3 +99,25 @@ IP_ADDR=$(cat $HOME/$CTRL_JOBID/ipcontroller_current_ip)
 source $HOME/venv/bin/activate
 mpirun ipengine --timeout=60.0 --mpi=mpi4py --profile=pbs --ip=$IP_ADDR
 ```
+
+##### IPController Script
+
+```bash
+#!/bin/bash
+#PBS -l select=1:ncpus=0
+#PBS -N ipcontroller
+#PBS -j oe
+
+## save node name
+## (not used at the moment)
+cat /etc/hostname |cut -f1 -d'.' > $HOME/ipcontroller_current_host
+
+## get node ethernet IP
+IP_ADDR=$(ip addr show eno1 | grep '^[ ]*inet ' | cut -f6 -d' '|cut -f1 -d'/')
+mkdir $HOME/$PBS_JOBID
+echo $IP_ADDR > $HOME/$PBS_JOBID/ipcontroller_current_ip
+
+cd $PBS_O_WORKDIR
+source $HOME/venv/bin/activate
+ipcontroller --profile=pbs --ip=$IP_ADDR
+```
