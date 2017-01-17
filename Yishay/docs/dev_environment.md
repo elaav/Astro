@@ -121,3 +121,9 @@ cd $PBS_O_WORKDIR
 source $HOME/venv/bin/activate
 ipcontroller --profile=pbs --ip=$IP_ADDR
 ```
+
+### Additional Resources:
+* IPyParallel Documentation: <https://ipyparallel.readthedocs.io/en/latest/>
+* TAU HPC Wiki: <http://wiki-hpc/index.php/Basic_information_(Astro)>
+* MPI4Py Tutorial <https://mpi4py.scipy.org/docs/usrman/tutorial.html>
+* MPI4Py Documentation: <https://mpi4py.readthedocs.io/en/stable/>
