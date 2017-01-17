@@ -46,4 +46,19 @@ For compute nodes it is enough to have the runtime version of these libraries:
 - `freetype`
 - `bzip2`
 - `openssl`
+- `sqlite` (?)
 
+
+### Initial Setup
+
+0. Make sure all required dependencies are installed.
+1. Create a new python virtual environment, for example:
+  `/path/to/python -m venv $HOME/venv`
+2. Activate the virtual environment for the current bash shell:
+  `source ~/vent/bin/activate`
+3. Install python packages:
+  `pip install healpy scipy cython mpi4py jupyter ipyparallel`
+  
+#### IPyParallel Setup
+
+#### PBS Integration
