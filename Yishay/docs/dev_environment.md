@@ -62,3 +62,21 @@ For compute nodes it is enough to have the runtime version of these libraries:
 #### IPyParallel Setup
 
 #### PBS Integration
+
+Script for starting a notebook:
+
+* If the notebooks are going to be mostly idle, we can set `ncpus` to 0.
+* Make sure to choose unique port number per user.
+
+```bash
+#!/bin/bash
+#PBS -l select=1:ncpus=0
+#PBS -N jupyter_notebook
+#PBS -j oe
+
+cd $PBS_O_WORKDIR
+mkdir $PBS_JOBID
+cat /etc/hostname |cut -f1 -d'.' > $HOME/jupyter_current_host
+source $HOME/venv/bin/activate
+jupyter notebook --no-browser --port=8895 2>&1 | tee $PBS_JOBID/jupyter_output
+```
