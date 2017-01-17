@@ -63,7 +63,7 @@ For compute nodes it is enough to have the runtime version of these libraries:
 
 #### PBS Integration
 
-Script for starting a notebook:
+##### Notebook script:
 
 * If the notebooks are going to be mostly idle, we can set `ncpus` to 0.
 * Make sure to choose unique port number per user.
@@ -79,4 +79,23 @@ mkdir $PBS_JOBID
 cat /etc/hostname |cut -f1 -d'.' > $HOME/jupyter_current_host
 source $HOME/venv/bin/activate
 jupyter notebook --no-browser --port=8895 2>&1 | tee $PBS_JOBID/jupyter_output
+```
+
+##### IPEngine Script
+
+Change `select` parameters according to job requirements and available resources (see <http://wiki-hpc/index.php/Basic_information_(Astro)>).
+
+```bash
+#!/bin/bash
+#PBS -l select=1:ncpus=3:mpiprocs=3:mem=1gb
+#PBS -N ipengine
+#PBS -j oe
+
+cd $PBS_O_WORKDIR
+
+#get ip address of current controller
+IP_ADDR=$(cat $HOME/$CTRL_JOBID/ipcontroller_current_ip)
+
+source $HOME/venv/bin/activate
+mpirun ipengine --timeout=60.0 --mpi=mpi4py --profile=pbs --ip=$IP_ADDR
 ```
