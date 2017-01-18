@@ -3,7 +3,16 @@
 0. connect to `astrophys2`  
 
 1. Start a jupyter notebook server:  
-  `qsub -q bigmem ipengine.pbs`
+  `qsub -q bigmem ipengine.pbs`  
+  A job ID will be displayed.
+  The connection details are saved in a file. To view it type:  
+  `head 1134.astrophys.local/jupyter_output`  
+  (where `1134.astrophys.local` is the job ID in this case)
+   ```
+       Copy/paste this URL into your browser when you connect for the first time,
+       to login with a token:
+           http://localhost:8895/?token=0641dd2d8c91c7ce48e87111207b05872c9cccba6967fb24
+   ```
 
 2. Start an ipcontroller instance:  
   `qsub -q bigmem ipcontroller.pbs`
@@ -15,8 +24,15 @@
 4. Start ipengine instances:  
   `qsub -q bigmem ipengine.pbs`
 
-* note: the `-q bigmem` argument can also be added to the `pbs` scripts
+  * note: the `-q bigmem` argument can also be added to the `pbs` scripts
 
 5. If you do not have port forwarding for the notebook server set up by default, 
   you may create it for the current session:  
-  press <kbd>Enter</kbd> followed by <kbd>Shift</kbd>+<kbd>~</kbd> and then <kbd>Shift</kbd>+<kbd>C</kbd>.
+  a. press <kbd>Enter</kbd> followed by <kbd>Shift</kbd>+<kbd>~</kbd> and then <kbd>Shift</kbd>+<kbd>C</kbd>.  
+  b. A special `ssh> ` prompt should appear. Type `-L <local_port>:localhost:<remote_port>`.  
+     It is convenient to keep the local and remote ports the same.  
+     For example:  
+     `ssh> -L 8895:localhost:8895`
+     
+     
+    
