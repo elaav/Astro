@@ -29,6 +29,10 @@ The main python packages considered here are:
 
 
 ### OS Dependencies (CentOS)
+If Anaconda is installed, it already contains everything needed.
+
+Otherwise:
+
 The following packages are required for building python and/or packages.
 - `gcc`
 - `libpng-devel`
@@ -48,8 +52,17 @@ For compute nodes it is enough to have the runtime version of these libraries:
 - `openssl`
 - `sqlite` (?)
 
+### Initial Setup (with Anaconda)
+1. Load the anaconda module:  
+   `module load python/anaconda_python-3.5`
+2. Activate the virtual environment for the current bash shell:
+   ```bash
+   source $(dirname $(which python))/activate
+   ```
+3. Install python packages:  
+   `pip install --user healpy mpi4py ipyparallel`
 
-### Initial Setup
+### Initial Setup (without Anaconda)
 
 0. Make sure all required dependencies are installed.
 1. Create a new python virtual environment, for example:
