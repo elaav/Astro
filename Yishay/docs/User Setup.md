@@ -22,12 +22,18 @@
   * `jupyter.pbs`  
   Put the files in your home directory.
 
-3. Create a python virtual environment:  
-  `/path/to/python36/bin/python3.6 -m venv ~/venv`
+3. Create a link to the anaconda environment:  
+  ```bash
+  ln -s /share/apps/python/anaconda-python-3.5 ~/default_conda
+  ```
 
 4. Activate the virtual environment for the current bash shell:  
-  `source ~/vent/bin/activate`
+  ```bash
+  source ~/default_conda/bin/activate
+  ```
 
-5. Install python packages:  
-  `pip install healpy scipy cython mpi4py jupyter ipyparallel`
+5. Install additional python packages:  
+  ```bash
+  pip install --user mpi4py ipyparallel
+  ```
 
