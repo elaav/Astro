@@ -11,7 +11,7 @@
      `ssh> -L 8895:localhost:8895`
 
 2. Start a jupyter notebook server:  
-  `qsub -q bigmem ipengine.pbs`  
+  `qsub -q bigmem jupyter.pbs`  
   A job ID will be displayed.
   The connection details are saved in a file. To view it type:  
   `head 1134.astrophys.local/jupyter_output` (where `1134.astrophys.local` is the job ID in this case)  
