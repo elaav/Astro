@@ -55,7 +55,7 @@ For compute nodes it is enough to have the runtime version of these libraries:
 ### Initial Setup (with Anaconda)
 1. Load the anaconda module:  
    `module load python/anaconda_python-3.5`
-2. Activate the virtual environment for the current bash shell:
+2. Activate the virtual environment for the current bash shell:  
    ```bash
    source $(dirname $(which python))/activate
    ```
