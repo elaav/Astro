@@ -126,7 +126,7 @@ mpirun ipengine --timeout=60.0 --mpi=mpi4py --profile=pbs --ip=$IP_ADDR
 cat /etc/hostname |cut -f1 -d'.' > $HOME/ipcontroller_current_host
 
 ## get node ethernet IP
-IP_ADDR=$(ip addr show eno1 | grep '^[ ]*inet ' | cut -f6 -d' '|cut -f1 -d'/')
+IP_ADDR=$(ip addr show ib0 | grep '^[ ]*inet ' | cut -f6 -d' '|cut -f1 -d'/')
 mkdir $HOME/$PBS_JOBID
 echo $IP_ADDR > $HOME/$PBS_JOBID/ipcontroller_current_ip
 
