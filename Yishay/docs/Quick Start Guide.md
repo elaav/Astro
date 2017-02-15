@@ -24,8 +24,9 @@
   Open the link in your browser to access the jupyter notebook.
 
 3. Start an ipcontroller instance:  
-  `qsub -q bigmem ipcontroller.pbs`
-
+  `qsub -q bigmem ipcontroller.pbs`  
+  Note: the PBS scripts support only 1 ipcontroller per user.
+  
 4. Edit `ipengine.pbs` to select the desired number of processes:  
   For example, to use 24 processes write:  
   `#PBS -l select=1:ncpus=24:mpiprocs=24`
@@ -35,9 +36,11 @@
 
   * note: the `-q bigmem` argument can also be added to the `pbs` scripts
 
-6. You may use the following script to make sure that everything is working:  
+6. You may use the following python script to make sure that everything is working:  
    ```python
    from ipyparallel import Client
    c = Client(profile='pbs')
    print(len(c))
-   ```
+   ```  
+   This should print the number of active ipengines.
+   
