@@ -1,6 +1,5 @@
 def full(b_num, r_num, filename):
     import pyfits as pf
-    from scipy.signal import savgol_filter, medfilt
     import numpy
     import scipy.interpolate as inter
     from math import ceil
@@ -64,7 +63,7 @@ def full(b_num, r_num, filename):
     # and what value is the last one of the blue x vector
     # these are the limits of the overlap
     first_r = r_wl[0]
-    last_b = b_wl[len(b_wl)-1]
+    last_b = b_wl[len(b_wl) - 1]
 
     # get what the limits are in terms of both parts' indices
     for i in range(len(b_wl) - 1):
